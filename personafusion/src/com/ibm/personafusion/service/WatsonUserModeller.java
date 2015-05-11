@@ -25,6 +25,13 @@ import com.ibm.personafusion.model.Trait;
  *    
  *  	String vizHTML     = WUM.getPersonVizHTML(personObject);
  *  @author Sean Welleck **/
+
+/** 
+ * @author yzyangbj@cn.ibm.com
+ * @version time：May 1, 2015 10:05:01 AM 
+ * Description:
+ * A wrapper for accessing the Watson Personality Insights API.
+ */
 public class WatsonUserModeller 
 {
 	private String username;
