@@ -62,7 +62,7 @@ public class FollowUpController {
 
 	private static void makeMobileDataRequest(String rawData) throws Exception {
 		String type = "application/json";
-		URL u = new URL("https://mobile.ng.bluemix.net/data/rest/v1/apps/"
+		URL u = new URL("https://console.ng.bluemix.net/data/rest/v1/apps/"
 				+ Config.MOBILE_DATA_APP_ID + "/injections?classname=Item");
 		
 		System.out.println(rawData);
