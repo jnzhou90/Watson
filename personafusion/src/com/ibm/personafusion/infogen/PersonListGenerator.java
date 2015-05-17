@@ -12,7 +12,7 @@ import java.util.Set;
 
 import com.ibm.personafusion.Constants;
 import com.ibm.personafusion.model.*;
-import com.ibm.personafusion.service.WatsonUserModeller;
+import com.ibm.personafusion.service.WatsonPersonalInsights;
 
 public class PersonListGenerator {
 
@@ -57,7 +57,7 @@ public class PersonListGenerator {
 
 				System.out.println("PplCounter: " + pplCounter);
 				
-				WatsonUserModeller WUM = new WatsonUserModeller();
+				WatsonPersonalInsights WUM = new WatsonPersonalInsights();
 				List<String> qaResponses = QuestionResponse.getResponseList();
 				String response = QuestionResponse.convertToFullString(qaResponses);
 				traitList = WUM.getTraitsList(response);				

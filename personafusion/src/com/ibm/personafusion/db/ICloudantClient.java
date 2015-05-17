@@ -1,6 +1,6 @@
 package com.ibm.personafusion.db;
 
-import java.util.Set;
+import java.util.List;
 
 import com.ibm.personafusion.model.Person;
 
@@ -16,6 +16,7 @@ public interface ICloudantClient {
 	
 	/**
 	 * get a person information with its unique id
+	 * if can not find this person, return null
 	 * @param personId person unique id
 	 * @return the person
 	 */
@@ -23,6 +24,7 @@ public interface ICloudantClient {
 
 	/**
 	 * get person set information with its query 
+	 * if can not find this person, return null
 	 * @param query JSON format
 	 *query JSON Demo:
 	   {
@@ -30,7 +32,7 @@ public interface ICloudantClient {
        }
 	 * @return
 	 */
-	Set<Person> getPersonSet(String query);
+	List<Person> getPersonSet(String query);
 
 
 

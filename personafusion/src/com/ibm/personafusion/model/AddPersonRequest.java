@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.ibm.personafusion.infogen.QuestionResponse;
 import com.ibm.personafusion.model.Person.Role;
-import com.ibm.personafusion.service.WatsonUserModeller;
+import com.ibm.personafusion.service.WatsonPersonalInsights;
 
 /** Models the JSON received from an POST /api/add request. **/
 public class AddPersonRequest
@@ -33,7 +33,7 @@ public class AddPersonRequest
 	private static List<Trait> getTraits(AddPersonRequest apr)
 	{
 		// get traits
-		WatsonUserModeller WUM = new WatsonUserModeller();
+		WatsonPersonalInsights WUM = new WatsonPersonalInsights();
 		String response = QuestionResponse.convertToFullString(apr.responses);
 		List<Trait> traits = WUM.getTraitsList(response);
 		return traits;

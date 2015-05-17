@@ -12,11 +12,7 @@ public interface IPersonController {
 	
 	/**
 	  * get a person information with its unique id
-	  * @param query JSON format
-	  * query JSON Demo:
-	   {
-         "sex":"male"
-       }
+	  * @param personId person unique id
 	  * @return JSON format
 	  * Person JSON Demo:
 	  {
@@ -25,7 +21,8 @@ public interface IPersonController {
 		"age":"25",
 		"sex":"female",
 		“photo”:”/temp/a.jsp”
-		"socialData":"xxxx"
+		"socialData":"xxxx",
+		"personalInsights":"TODO"
 	   }
 	  */
 	 @Path("/getPerson")
@@ -48,24 +45,30 @@ public interface IPersonController {
 					"name":"Devaid",
 					"age":"25",
 					"sex":"female",
-					“photo”:”/temp/a.jsp”
-					"socialData":"xxxx"
+					“photo”:”/temp/a.jsp”,
+					"socialData":"xxxx",
+					"personalInsights":"TODO",
+					"distToQueryPerson":"90"
 				  },
 				  {
 					"id":"moxuan@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
 					"sex":"female",
-					“photo”:”/temp/a.jsp”
-					"socialData":"xxxx"
+					“photo”:”/temp/a.jsp”,
+					"socialData":"xxxx",
+					"personalInsights":"TODO",
+					"distToQueryPerson":"80"
 				  },
 				  {
 					"id":"qiaoxi@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
 					"sex":"female",
-					“photo”:”/temp/a.jsp”
-					"socialData":"xxxx"
+					“photo”:”/temp/a.jsp”,
+					"socialData":"xxxx",
+					"personalInsights":"TODO",
+					"distToQueryPerson":"70"
 				  }
 	        ]
 	   }

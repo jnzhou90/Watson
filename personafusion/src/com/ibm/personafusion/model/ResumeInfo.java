@@ -7,6 +7,7 @@ import java.util.List;
  * Resume Info is going to not be associated with Watson API
  */
 
+//TODO need to remove after code
 public class ResumeInfo 
 {
 	List<String> techSkills;

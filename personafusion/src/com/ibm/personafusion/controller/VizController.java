@@ -9,7 +9,7 @@ import javax.ws.rs.core.UriInfo;
 
 import com.ibm.personafusion.Config;
 import com.ibm.personafusion.model.Person;
-import com.ibm.personafusion.service.WatsonUserModeller;
+import com.ibm.personafusion.service.WatsonPersonalInsights;
 
 /** Handles the /api/viz API endpoint.
  *  Visualizes a person's personality traits.
@@ -42,7 +42,7 @@ public class VizController
 			return error();
 		}
 		
-		WatsonUserModeller WUM = new WatsonUserModeller();
+		WatsonPersonalInsights WUM = new WatsonPersonalInsights();
 		String vizHTML = WUM.getPersonVizHTML(p);
 		
 		if (vizHTML == null)

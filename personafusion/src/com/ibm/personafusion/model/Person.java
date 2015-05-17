@@ -8,28 +8,51 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import com.ibm.personafusion.controller.JsonUtils;
+
 public class Person implements Comparable<Person>
 {
-	public String name;
-	public List<Trait> traits;
+	
+	// --------------------------------------------------------------------------------------
+	// --properties
+	// --------------------------------------------------------------------------------------
+		
+    //one queryPerson for everyone
+	static Person queryPerson;
+	
+	public String id;
+    public String name;
+    public int age;
+    public String sex;//value is male or female
+	public String image_url; // person photo url
+	public String socialData; //used as watson personal insights input data
+    public List<Trait> traits; //personalInsights
+	//different distances for everyone
+	public double distToQueryPerson; //TODO change this method to private after code
+	
+	//one set of weights for everyone
+	static double weightTraits;
+    
+    //--------------------------------------------------------------------------------
 	public enum Role {DEV, Manager};
 	public Role role;
 	public ResumeInfo resumeInfo;
 	//This will be the list of answers from the q & a of the person
 	//index 0 response to question 1, index 1 response to question 2 etc...
 	public List<String> qaResponses;
-	public String image_url;
+
 	public List<String> keyWords;
 	
-	//one queryPerson for everyone
-	static Person queryPerson;
-	//different distances for everyone
-	public double distToQueryPerson;
 	public String group;
-	//one set of weights for everyone
-	static double weightTraits, weightResume, weightRole;
 	
-	public Person(String name, List<Trait> traits, String image_url, ResumeInfo resumeInfo, Role role, List<String> keyWords)
+	//TODO need to delete this constructor after code
+	static double weightResume=1, weightRole=1; 
+	
+	// --------------------------------------------------------------------------------------
+	// --Constructor
+	// --------------------------------------------------------------------------------------
+	
+	public Person(String name, List<Trait> traits, String image_url,List<String> keyWords)
 	{
 		this.name = name;
 		this.traits = traits;
@@ -60,10 +83,76 @@ public class Person implements Comparable<Person>
 		this.keyWords = new ArrayList<String>();
 	}
 	
+	public Person(String name, List<Trait> traits, String image_url, ResumeInfo resumeInfo, Role role, List<String> keyWords)
+	{
+		this.name = name;
+		this.traits = traits;
+		this.resumeInfo = resumeInfo;
+		this.role = role;
+		//Set default weights
+		this.weightTraits = 1;
+		this.weightResume = 1;
+		this.weightRole = 1;
+		this.image_url = image_url;
+		this.qaResponses = new ArrayList<String>();
+		this.keyWords = keyWords;
+	}
+	
+	// --------------------------------------------------------------------------------------
+	// --API
+	// --------------------------------------------------------------------------------------
+	
+	/**
+	 * TODO return JSON format of the person
+	 * @return JSON format
+	 */
+	public String toJSONFormat(){
+		/*
+		{
+			"id":"yzbj@cn.ibm.com",
+			"name":"Devaid",
+			"age":"25",
+			"sex":"female",
+			“photo”:”/temp/a.jsp”
+			"socialData":"xxxx"
+	   }
+		 */
+		
+		JsonUtils jsonUtils = new JsonUtils();
+		//TODO need to change jsonUtils.getJson method to fit our json format
+		 jsonUtils.getJson(this);
+		
+		return null;
+	}//end method
+	
 	public void setQueryPerson(Person p)
 	{
 		this.queryPerson = p;
 	}
+
+	
+	public double getDistToQueryPerson(){
+		return this.distToQueryPerson;
+	}
+	
+	public void setDistToQueryPerson(Double distToQueryPerson){
+		this.distToQueryPerson=this.distToQueryPerson;
+	}
+
+	public int compareTo(Person other) 
+	{
+		//sort bases off min distance from query perosn
+		//weight different distances between resume skills, traits, and role
+		double thisDistance = this.getDistanceToQueryPerson();
+		double otherDistance = other.getDistanceToQueryPerson();
+		if(thisDistance < otherDistance)
+			return -1;
+		if(thisDistance > otherDistance)
+			return 1;
+		else
+			return 0;
+	}
+	//---------------------------------------------------------
 	
 	public String toString()
 	{
@@ -177,11 +266,21 @@ public class Person implements Comparable<Person>
 		
 	}
 	
-	double getDistanceToQueryPerson()
+	// --------------------------------------------------------------------------------------
+	// --private method
+	// --------------------------------------------------------------------------------------
+	
+	/**
+	 * using editor algorithm to get this person distance to the query person
+	 * distance=(x1-y1)^2+(x2-y2)^2+...+(xN-yN)^2,n is the according trait, xN is the according trait value
+	 * @return distance of this person to the query person
+	 */
+	private double getDistanceToQueryPerson()
 	{
 		
 		double distance = 0, distanceTraits = 0, distanceResume = 0, distanceRole = 0;
 		
+		//get query person distanceTraits
 		for(int i=0; i<this.queryPerson.traits.size(); i++)
 		{
 			String queryTraitName = this.queryPerson.traits.get(i).traitName;
@@ -189,33 +288,42 @@ public class Person implements Comparable<Person>
 			distanceTraits += this.getTraitDistance(queryTraitName, queryTraitPercent);
 		}
 		
-		double distanceTechSkills = 0, distancePastEmployers = 0;
-		for(int i=0; i<this.queryPerson.resumeInfo.techSkills.size(); i++)
-		{
-			//if all query tech skills exist in this person distance is 0
-			//distance grows as skills dont match
-			String techSkill = this.queryPerson.resumeInfo.techSkills.get(i);
-			if(!this.resumeInfo.techSkills.contains(techSkill))
-				distanceTechSkills++;
-			
-		}	
-		for(int i=0; i<this.queryPerson.resumeInfo.pastEmployers.size(); i++)
-		{
-			String pastEmployer = this.queryPerson.resumeInfo.pastEmployers.get(i);
-			if(!this.resumeInfo.techSkills.contains(pastEmployer))
-				distancePastEmployers++;
-		}
-		distanceResume = (.75 * distancePastEmployers) + (.25 * distanceTechSkills);
+
+//		//calculate this person skills distance
+//		double distanceTechSkills = 0;
+//		for(int i=0; i<this.queryPerson.resumeInfo.techSkills.size(); i++)
+//		{
+//			//if all query tech skills exist in this person distance is 0
+//			//distance grows as skills dont match
+//			String techSkill = this.queryPerson.resumeInfo.techSkills.get(i);
+//			if(!this.resumeInfo.techSkills.contains(techSkill))
+//				distanceTechSkills++;
+//			
+//		}	
+//		
+//		
+//		double distancePastEmployers = 0;
+//		for(int i=0; i<this.queryPerson.resumeInfo.pastEmployers.size(); i++)
+//		{
+//			String pastEmployer = this.queryPerson.resumeInfo.pastEmployers.get(i);
+//			if(!this.resumeInfo.techSkills.contains(pastEmployer))
+//				distancePastEmployers++;
+//		}
+//		distanceResume = (.75 * distancePastEmployers) + (.25 * distanceTechSkills);
+//		
+//		if(!this.queryPerson.role.equals(this.role))
+//			distanceRole = 1;
 		
-		if(!this.queryPerson.role.equals(this.role))
-			distanceRole = 1;
+//		distance = (weightTraits * distanceTraits) + (weightResume * distanceResume) + (weightRole * distanceRole);
 		
-		distance = (weightTraits * distanceTraits) + (weightResume * distanceResume) + (weightRole * distanceRole);
+		//TODO now just cosider the personal insights traits as influence factor for couple match. Need to add other factors like height,education,appearance and so on for couple match.
+		distance = (weightTraits * distanceTraits);
+				
 		this.distToQueryPerson = distance;
 		return distance;
 	}
 	
-	double getTraitDistance(String queryTrait, double queryScore)
+	private double getTraitDistance(String queryTrait, double queryScore)
 	{
 		double distance = 1;//worst case if the trait does not exist return max value 1
 		for(int i=0; i<this.traits.size(); i++)
@@ -230,17 +338,5 @@ public class Person implements Comparable<Person>
 		return distance;
 	}
 	
-	public int compareTo(Person other) 
-	{
-		//sort bases off min distance from query perosn
-		//weight different distances between resume skills, traits, and role
-		double thisDistance = this.getDistanceToQueryPerson();
-		double otherDistance = other.getDistanceToQueryPerson();
-		if(thisDistance < otherDistance)
-			return -1;
-		if(thisDistance > otherDistance)
-			return 1;
-		else
-			return 0;
-	}
+	
 }

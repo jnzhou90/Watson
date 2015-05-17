@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
@@ -32,7 +33,7 @@ import com.ibm.personafusion.model.Trait;
  * Description:
  * A wrapper for accessing the Watson Personality Insights API.
  */
-public class WatsonUserModeller 
+public class WatsonPersonalInsights 
 {
 	private String username;
 	private String password;
@@ -41,20 +42,33 @@ public class WatsonUserModeller
 	private String visual_api;
 	
 	private Executor executor;
+	private JSONArray watson;
+	private JSONObject watsonInstance;
+	private JSONObject watsonCredentials;
 	
-	public WatsonUserModeller()
-	{
-		//TODO read env VCAP_SERVICES and parse it into JSON
-		this.username = "";
-		this.password = "";
-		this.base_url = "";
-		this.profile_api = Config.WATSON_PROF_API;
-		this.visual_api = Config.WATSON_VIZ_API;
+	private static Logger logger = Logger.getLogger(WatsonPersonalInsights.class.getName());
+	private static final long serialVersionUID = 1L;
+	
+	public WatsonPersonalInsights()
+	{		
+		//read env VCAP_SERVICES and parse it into JSON
+		logger.info("Processing VCAP_SERVICES for Personal Insights");
+		JSONObject vcap = Config.getVCAPServices();
+
+		watson=(JSONArray)vcap.get(Config.PersonalInsightsServiceName);
+		watsonInstance=(JSONObject)watson.get(0);
+		watsonCredentials=(JSONObject)watsonInstance.get("credentials");
+
+		this.username = (String)watsonCredentials.get("username");
+		this.password = (String)watsonCredentials.get("password");
+		this.base_url = (String)watsonCredentials.get("url");
+		this.profile_api = Config.PersonalInsightsProfileAPI;
 		this.executor = Executor.newInstance().auth(username, password);
 		if (this.executor == null) 
 		{ 
-			System.err.println("Authentication failed in WatsonUserModeller.");
+			System.err.println("Authentication failed in Watson Personality Insights.");
 		}
+		
 	}
 	
 	/** Get the list of Traits for this text using the data 

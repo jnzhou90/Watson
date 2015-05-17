@@ -8,6 +8,11 @@ import com.ibm.personafusion.controller.SearchController;
 import com.ibm.personafusion.db.CloudantClient;
 import com.ibm.personafusion.model.Person;
 
+/**
+ * 
+ * @author Yang Zhong
+ * Need to remove this class after code
+ */
 public class Engine 
 {
 	List<Person> people;
