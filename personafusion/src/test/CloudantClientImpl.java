@@ -1,4 +1,4 @@
-package com.ibm.personafusion.controller;
+package test;
 
 import java.util.List;
 
@@ -7,13 +7,9 @@ import com.ibm.personafusion.model.Person;
 
 /** 
  * @author yzyangbj@cn.ibm.com
- * @version time：May 17, 2015 2:26:08 PM 
+ * @version time：May 17, 2015 7:14:18 PM 
  * Description:
- * Used for test the business layer
- * TODO test tasks
- * Test1: test watson personal insights method
- * Test2: test persona controller method
- * After test config RESTFULL API
+ * TODO 
  */
 public class CloudantClientImpl implements ICloudantClient {
 

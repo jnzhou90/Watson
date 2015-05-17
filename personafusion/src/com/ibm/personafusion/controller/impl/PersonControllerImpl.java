@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.ibm.personafusion.controller.CloudantClientImpl;
+import test.CloudantClientImpl;
+
 import com.ibm.personafusion.controller.IPersonController;
 import com.ibm.personafusion.controller.JsonUtils;
 import com.ibm.personafusion.db.ICloudantClient;
