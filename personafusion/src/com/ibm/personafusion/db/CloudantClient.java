@@ -41,9 +41,9 @@ public class CloudantClient
 
 		//TODO read env VCAP_SERVICES and parse it into JSON
 		this.port = Config.CLOUDANT_PORT;
-		this.host = "";
-		this.username = "";
-		this.password = "";
+		this.host = Config.HOST;
+		this.username = Config.USERNAME;
+		this.password = Config.PASSWORD;
 		this.name = Config.CLOUDANT_NAME;
 		this.dbc = this.createDBConnector();
 	}
