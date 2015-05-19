@@ -16,6 +16,10 @@ public class Config
     /** Cloudant **/
     public static final int CLOUDANT_PORT = 443;
     public static final String CLOUDANT_NAME = "";
+    public static final String HOST = "";
+    public static final String USERNAME = "";
+    public static final String PASSWORD = "";
+    
     
     public static CloudantClient cc = new CloudantClient();
 
