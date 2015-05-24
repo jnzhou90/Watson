@@ -1,4 +1,4 @@
-package com.ibm.personafusion.infogen;
+package com.ibm.findyourlove.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;

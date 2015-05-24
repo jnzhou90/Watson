@@ -1,4 +1,4 @@
-package com.ibm.personafusion.service;
+package com.ibm.findyourlove.service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -13,11 +13,11 @@ import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
 
+import com.ibm.findyourlove.model.Person;
+import com.ibm.findyourlove.model.Trait;
+import com.ibm.findyourlove.util.Config;
 import com.ibm.json.java.JSONArray;
 import com.ibm.json.java.JSONObject;
-import com.ibm.personafusion.Config;
-import com.ibm.personafusion.model.Person;
-import com.ibm.personafusion.model.Trait;
 
 /** A wrapper for accessing the Watson User Model API.
  *  Usage: 
@@ -98,16 +98,6 @@ public class WatsonPersonalInsights
 			}
 		}
 		return traits;
-	}
-	
-	/** Produce a visualization of a Person's traits based
-	 *  on the text of their tweets. Uses the Watson API. **/
-	public String getPersonVizHTML(Person p)
-	{
-		if (p == null) { return null; }
-		String profileJSON = this.getProfileJSON(combine(p.qaResponses));
-		String vizHTML = this.getVizHTML(profileJSON);
-		return vizHTML;
 	}
 	
 	/** Get a personality profile from Watson based on the input text.

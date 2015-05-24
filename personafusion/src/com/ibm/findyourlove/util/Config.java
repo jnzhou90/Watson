@@ -1,9 +1,9 @@
-package com.ibm.personafusion;
+package com.ibm.findyourlove.util;
 
 import java.io.IOException;
 
+
 import com.ibm.json.java.JSONObject;
-import com.ibm.personafusion.db.CloudantClient;
 
 public class Config 
 {
@@ -14,14 +14,8 @@ public class Config
     public static final String WATSON_VIZ_API = "/api/v2/visualize";
 	
     /** Cloudant **/
-    public static final int CLOUDANT_PORT = 443;
-    public static final String CLOUDANT_NAME = "";
-    public static final String HOST = "";
-    public static final String USERNAME = "";
-    public static final String PASSWORD = "";
-    
-    
-    public static CloudantClient cc = new CloudantClient();
+//    public static final int CLOUDANT_PORT = 443;
+    public static final String CLOUDANT_NAME = "cloudantNoSQLDB";
 
     /* Mobile Data Config */
     public static final String MOBILE_DATA_APP_ID = "";

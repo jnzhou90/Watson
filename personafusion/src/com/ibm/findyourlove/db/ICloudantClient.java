@@ -1,8 +1,8 @@
-package com.ibm.personafusion.db;
+package com.ibm.findyourlove.db;
 
 import java.util.List;
 
-import com.ibm.personafusion.model.Person;
+import com.ibm.findyourlove.model.Person;
 
 /** 
  * @author yzyangbj@cn.ibm.com
@@ -28,11 +28,11 @@ public interface ICloudantClient {
 	 * @param query JSON format
 	 *query JSON Demo:
 	   {
-         "sex":"male"
+         "gender":"male"
        }
 	 * @return
 	 */
-	List<Person> getPersonSet(String query);
+	List<Person> getPersonList(String query);
 
 
 

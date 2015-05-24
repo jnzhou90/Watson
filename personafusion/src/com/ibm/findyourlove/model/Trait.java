@@ -1,4 +1,4 @@
-package com.ibm.personafusion.model;
+package com.ibm.findyourlove.model;
 
 /*
  * Note Traits are from the Watson API

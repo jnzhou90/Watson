@@ -1,4 +1,4 @@
-package com.ibm.personafusion.controller;
+package com.ibm.findyourlove.controller;
 
 import javax.ws.rs.Path;
 
@@ -19,7 +19,7 @@ public interface IPersonController {
 		"id":"yzbj@cn.ibm.com",
 		"name":"Devaid",
 		"age":"25",
-		"sex":"female",
+		"gender":"female",
 		“photo”:”/temp/a.jsp”
 		"socialData":"xxxx",
 		"personalInsights":"TODO"
@@ -34,7 +34,7 @@ public interface IPersonController {
 	 * @param query  JSON format
 	 * query JSON Demo:
 	   {
-         "sex":"male"
+         "gender":"male"
        }
 	 * @return person set which matched query conditions
 	 * JSON Demo:
@@ -44,7 +44,7 @@ public interface IPersonController {
 					"id":"xiaopeng@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
-					"sex":"female",
+					"gender":"female",
 					“photo”:”/temp/a.jsp”,
 					"socialData":"xxxx",
 					"personalInsights":"TODO",
@@ -54,7 +54,7 @@ public interface IPersonController {
 					"id":"moxuan@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
-					"sex":"female",
+					"gender":"female",
 					“photo”:”/temp/a.jsp”,
 					"socialData":"xxxx",
 					"personalInsights":"TODO",
@@ -64,7 +64,7 @@ public interface IPersonController {
 					"id":"qiaoxi@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
-					"sex":"female",
+					"gender":"female",
 					“photo”:”/temp/a.jsp”,
 					"socialData":"xxxx",
 					"personalInsights":"TODO",
@@ -91,7 +91,7 @@ public interface IPersonController {
 					"id":"xiaopeng@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
-					"sex":"female",
+					"gender":"female",
 					“photo”:”/temp/a.jsp”
 					"socialData":"xxxx"
 				  },
@@ -99,7 +99,7 @@ public interface IPersonController {
 					"id":"moxuan@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
-					"sex":"female",
+					"gender":"female",
 					“photo”:”/temp/a.jsp”
 					"socialData":"xxxx"
 				  },
@@ -107,7 +107,7 @@ public interface IPersonController {
 					"id":"qiaoxi@cn.ibm.com",
 					"name":"Devaid",
 					"age":"25",
-					"sex":"female",
+					"gender":"female",
 					“photo”:”/temp/a.jsp”
 					"socialData":"xxxx"
 				  }
