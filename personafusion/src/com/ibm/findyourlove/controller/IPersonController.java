@@ -74,7 +74,7 @@ public interface IPersonController {
 	   }
 	 */
 	 @Path("/getPersonSet")
-	String getPersonSet(String query);
+	String getPersonList(String query);
 
 	 
 	  /**

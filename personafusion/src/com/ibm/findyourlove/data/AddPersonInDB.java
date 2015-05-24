@@ -23,24 +23,51 @@ public class AddPersonInDB {
 		CloudantClientImpl cc = new CloudantClientImpl();
 		
 		try {
-			String id="y2@cn.ibm.com";
-			String name="Test1";
-			String sex="male";
-			String image_url="/images/test.jpg";
-			String socialData="socialData";
-			int age=24;
+			cc.deleteAll();
 			
-			List<Trait> traits = new ArrayList<Trait>();
-			traits.add(new Trait("programming", .9));
-			traits.add(new Trait("being awesome", .95));
-			
-			//get traits from watson
-//			WatsonPersonalInsights watsonPersonalInsights = new WatsonPersonalInsights();
-//			List<Trait> traits = watsonPersonalInsights.getTraitsList(socialData);
-			
-			Person person=new Person(id, name, age, sex, image_url, socialData, traits);
-			
-			cc.putPerson(person);
+			//add femal person
+			for(int i=0;i<3;i++){
+				String id=i+"@cn.ibm.com";
+				String name="Test"+i;
+				String gender=Constants.FEMAL;
+				String image_url="/images/test.jpg";
+				String socialData="socialData";
+				int age=24;
+				
+				List<Trait> traits = new ArrayList<Trait>();
+				traits.add(new Trait("programming", i));
+				traits.add(new Trait("being awesome", i));
+				
+				//get traits from watson
+//				WatsonPersonalInsights watsonPersonalInsights = new WatsonPersonalInsights();
+//				List<Trait> traits = watsonPersonalInsights.getTraitsList(socialData);
+				
+				Person person=new Person(id, name, age, gender, image_url, socialData, traits);
+				
+				cc.putPerson(person);
+			}
+
+			//add male person
+			for(int i=3;i<6;i++){
+				String id=i+"@cn.ibm.com";
+				String name="Test"+i;
+				String gender=Constants.MALE;
+				String image_url="/images/test.jpg";
+				String socialData="socialData";
+				int age=24;
+				
+				List<Trait> traits = new ArrayList<Trait>();
+				traits.add(new Trait("programming", i));
+				traits.add(new Trait("being awesome",i));
+				
+				//get traits from watson
+//				WatsonPersonalInsights watsonPersonalInsights = new WatsonPersonalInsights();
+//				List<Trait> traits = watsonPersonalInsights.getTraitsList(socialData);
+				
+				Person person=new Person(id, name, age, gender, image_url, socialData, traits);
+				
+				cc.putPerson(person);
+			}
 			
 			//get person
 			String query="{\"gender\":\"male\"}";

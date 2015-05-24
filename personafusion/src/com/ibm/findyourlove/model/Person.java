@@ -73,6 +73,14 @@ public class Person implements Comparable<Person>
 		//weight different distances between resume skills, traits, and role
 		double thisDistance = this.getDistanceToQueryPerson();
 		double otherDistance = other.getDistanceToQueryPerson();
+		
+		//TODO test
+		System.out.println("distance-------------------");
+		System.out.println("this class "+this.getClass().getName());
+		System.out.println("other class "+other.getClass().getName());
+		System.out.println("thisDistance="+thisDistance);
+		System.out.println("otherDistance="+otherDistance);
+		
 		if(thisDistance < otherDistance)
 			return -1;
 		if(thisDistance > otherDistance)

@@ -34,7 +34,7 @@ public class PersonControllerImpl implements IPersonController {
 	}
 
 	@Override
-	public String getPersonSet(String query) {
+	public String getPersonList(String query) {
 		List<Person> person=cloudantClient.getPersonList(query);
 		if(person.size()>0){
 			return JsonUtils.getListPersonJson(person);
