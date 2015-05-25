@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.ibm.findyourlove.controller.IPersonController;
 import com.ibm.findyourlove.controller.PersonControllerImpl;
+import com.ibm.findyourlove.model.QueryPara;
 
 /** 
  * @author Yang Zhong
@@ -40,7 +41,10 @@ public class PersonControllerImplTest {
 
 	@Test
 	public void testGetRankResult() {
-		String rankResult=personController.getRankResult(personId, query, "10");
+		
+		String query2="{\"personId\":\"0@cn.ibm.com\",\"gender\":\"male\"}";
+
+		String rankResult=personController.getRankResult(query2);
 		
 		
 		System.out.println("----------------------------------");

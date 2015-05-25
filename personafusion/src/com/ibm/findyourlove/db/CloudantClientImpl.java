@@ -94,11 +94,7 @@ public class CloudantClientImpl implements ICloudantClient
 	}
 	
 	@Override
-	public List<Person> getPersonList(String query) {
-
-		QueryPara queryPara=JsonUtils.getQueryPara(query);
-		String gender=queryPara.getGender();
-		
+	public List<Person> getPersonList(String gender) {		
 		List<Person> people = new ArrayList<Person>();
 		List<String> docIds = dbc.getAllDocIds();
 		for(String docId : docIds)

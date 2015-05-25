@@ -28,10 +28,10 @@ public class Person implements Comparable<Person>
 	public String socialData; //used as watson personal insights input data
     public List<Trait> traits; //personalInsights
 	//different distances for everyone
-	public double distToQueryPerson; //TODO change this method to private after code
+	public double  distToQueryPerson; //TODO change this method to private after code
 	
 	//one set of weights for everyone
-	static double weightTraits;
+	static double weightTraits=1;
 	
 	// --------------------------------------------------------------------------------------
 	// --Constructor
@@ -40,6 +40,7 @@ public class Person implements Comparable<Person>
 	public Person(String id, String name, int age, String sex,
 			String image_url, String socialData, List<Trait> traits) {
 		super();
+		this.weightTraits=1;
 		this.id = id;
 		this.name = name.toUpperCase();
 		this.age = age;
@@ -74,13 +75,6 @@ public class Person implements Comparable<Person>
 		double thisDistance = this.getDistanceToQueryPerson();
 		double otherDistance = other.getDistanceToQueryPerson();
 		
-		//TODO test
-		System.out.println("distance-------------------");
-		System.out.println("this class "+this.getClass().getName());
-		System.out.println("other class "+other.getClass().getName());
-		System.out.println("thisDistance="+thisDistance);
-		System.out.println("otherDistance="+otherDistance);
-		
 		if(thisDistance < otherDistance)
 			return -1;
 		if(thisDistance > otherDistance)
@@ -110,9 +104,9 @@ public class Person implements Comparable<Person>
 	private double getDistanceToQueryPerson()
 	{
 		
-		double distance = 0, distanceTraits = 0, distanceResume = 0, distanceRole = 0;
+		double distance = 0, distanceTraits = 0;
 		
-		//get query person distanceTraits
+		//get query person distance Traits
 		for(int i=0; i<this.queryPerson.traits.size(); i++)
 		{
 			String queryTraitName = this.queryPerson.traits.get(i).traitName;

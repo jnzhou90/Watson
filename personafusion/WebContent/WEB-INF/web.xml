@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"  
     id="WebApp_ID" version="2.5">  
 
-  <display-name>Hello Java</display-name>
+  <display-name>Find You Love With Watson</display-name>
   <servlet>
 		<servlet-name>JAX-RS Servlet</servlet-name>
 		<servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>

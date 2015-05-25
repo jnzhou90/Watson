@@ -1,19 +1,25 @@
 package com.ibm.findyourlove.data;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
 import com.ibm.findyourlove.model.Person;
 import com.ibm.findyourlove.model.Trait;
 import com.ibm.findyourlove.service.WatsonPersonalInsights;
+import com.ibm.findyourlove.util.Config;
 import com.ibm.findyourlove.util.Constants;
+import com.ibm.findyourlove.util.FileTool;
 
 /**
  * 
@@ -36,54 +42,58 @@ public class PersonListGenerator {
 				
 		List<Person> result = new ArrayList<Person>();
 
-		int pplCounter = 1;
+		int pCounter = 1;
 		
 		String imgURL = "";
+		String gender=null;
 		List<Trait> traitList;
 		
+		String IMAGEPATH=Constants.IMAGEPATH;
+		String NAMEPATH=Constants.NAMEPATH;
+		String INSIGHTSINPUTFOLDER=Constants.INSIGHTSINPUTFOLDER;
 		
 		try {
 			//image data source
-			URL url = new URL("https://dl.dropboxusercontent.com/u/27101002/personafusion/imageLinks.txt");
-			Scanner scan0 = new Scanner(url.openStream());
+//			URL url = new URL("https://dl.dropboxusercontent.com/u/27101002/personafusion/imageLinks.txt");
+			BufferedReader reader = new BufferedReader( new FileReader(IMAGEPATH));
+			Scanner scan0 = new Scanner(reader);
 			
 			// Set<String> nameList = NameGenerator.generateDistinctFullNames(numPeople);
 			Set<String> nameList = getNameList();
-			for(String name : nameList) {
-				// Call Watson to get traits. Call keyword converter to get keywords.
+			for(String name : nameList) {								
+				//get traits from watson
+				String socialData=FileTool.getFileContent(new File(INSIGHTSINPUTFOLDER+pCounter+".txt"));
+				WatsonPersonalInsights watsonPersonalInsights = new WatsonPersonalInsights();
+				List<Trait> traits = watsonPersonalInsights.getTraitsList(socialData);		
 				
 				if(scan0.hasNextLine()) {
 					imgURL = scan0.nextLine();
 				}				
-
-				System.out.println("PplCounter: " + pplCounter);
-				
-				//TODO get socail data from local json
-				String socialData="TODO";
-				
-				//get traits from watson
-				WatsonPersonalInsights watsonPersonalInsights = new WatsonPersonalInsights();
-				List<Trait> traits = watsonPersonalInsights.getTraitsList(socialData);		
+				String image_url=imgURL;
 				
 				String id=name; //here just use name as id 
-				//TODO first 50 is male, the other 50 is femal in image data source
-				String gender=Constants.FEMAL;
-				String image_url=imgURL;
-				//TODO use random method to generate age is [20,30]
-				int age=24;
+				int age=getAge(20, 30);
+				
+				//first 50 is male, the other 50 is femal in image data source
+				if(pCounter<=50){
+					gender=Constants.MALE;
+				}else{
+					gender=Constants.FEMAL;
+				}
 				
 				Person newPerson=new Person(id, name, age, gender, image_url, socialData, traits);
 				
 				result.add(newPerson);
 				
-				pplCounter++;				
+				if(pCounter>100)
+					break;
+				
+				pCounter++;				
 			}
 			scan0.close();
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -113,4 +123,15 @@ public class PersonListGenerator {
 		
 	}
 	
+	/**
+	 * random generate aget between [min,max]
+	 * @param min
+	 * @param max
+	 * @return
+	 */
+	private static int getAge(int min,int max){
+        Random random = new Random();
+        int age = random.nextInt(max)%(max-min+1) + min;
+        return age;
+	}
 }

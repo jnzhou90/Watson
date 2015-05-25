@@ -1,23 +1,19 @@
 package com.ibm.findyourlove.controller;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
+import com.google.gson.Gson;
 import com.ibm.findyourlove.db.CloudantClientImpl;
 import com.ibm.findyourlove.db.ICloudantClient;
 import com.ibm.findyourlove.model.Person;
-import com.ibm.findyourlove.model.Trait;
-import com.ibm.findyourlove.service.WatsonPersonalInsights;
+import com.ibm.findyourlove.model.QueryPara;
 import com.ibm.findyourlove.util.JsonUtils;
 
 /** 
  * @author Yang Zhong
  * @version time：May 17, 2015 2:24:04 PM 
- * Description:
- * TODO 
+ * Description: person controller API
  */
 public class PersonControllerImpl implements IPersonController {
 	
@@ -45,12 +41,19 @@ public class PersonControllerImpl implements IPersonController {
 	}
 
 	@Override
-	public String getRankResult(String personId, String query, String topN) {		
+	public String getRankResult(String query) {		
+		//parse json query parameters
+		Gson gson = new Gson();
+		QueryPara queryPara=gson.fromJson(query, QueryPara.class);	
+		
+		String personId=queryPara.getPersonId();
+		String gender=queryPara.getGender();
+		
 		//get query person
 		Person queryPerson=cloudantClient.getPerson(personId);
 		
 		//get person list which matched query person
-		List<Person> matchPerson=cloudantClient.getPersonList(query);
+		List<Person> matchPerson=cloudantClient.getPersonList(gender);
 		
 		if(matchPerson.size()==0){
 			return null;

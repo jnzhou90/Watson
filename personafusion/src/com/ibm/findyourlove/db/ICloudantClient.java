@@ -21,18 +21,14 @@ public interface ICloudantClient {
 	 * @return the person
 	 */
 	Person getPerson(String personId);
-
+	
 	/**
 	 * get person set information with its query 
 	 * if can not find this person, return null
-	 * @param query JSON format
-	 *query JSON Demo:
-	   {
-         "gender":"male"
-       }
+	 * @param gender male or femal
 	 * @return
 	 */
-	List<Person> getPersonList(String query);
+	List<Person> getPersonList(String gender);
 
 
 

@@ -82,6 +82,10 @@ public interface IPersonController {
 	   * if N> matched person num, then return all the matched person,if query=null,return all person
 	   * @param personId the unique id for the given person
 	   * @param query
+	   * query JSON demo:
+	   * {"personId":"yz",
+	   *   "gender":gender
+	   * }
 	   * @param topN  top number of rank result
 	   * @return  JSON format of the matched persons list with ranked list
 	   * JSON Demo:
@@ -115,6 +119,6 @@ public interface IPersonController {
 	   }
 	   */
 	 @Path("/getRankResult")
-	  String getRankResult(String personId,String query,String topN);
+	  String getRankResult(String query);
 
 }
