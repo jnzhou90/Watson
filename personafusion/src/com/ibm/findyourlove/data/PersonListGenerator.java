@@ -14,12 +14,14 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 
+import com.ibm.findyourlove.db.CloudantClientImpl;
 import com.ibm.findyourlove.model.Person;
 import com.ibm.findyourlove.model.Trait;
 import com.ibm.findyourlove.service.WatsonPersonalInsights;
 import com.ibm.findyourlove.util.Config;
 import com.ibm.findyourlove.util.Constants;
 import com.ibm.findyourlove.util.FileTool;
+import com.ibm.findyourlove.util.JsonUtils;
 
 /**
  * 
@@ -30,7 +32,27 @@ public class PersonListGenerator {
 
 	
 	public static void main(String[] args) {
-		generateDistinctPeople(100);		
+		List<Person> personList = generateDistinctPeople(100);	
+		
+		String personJson=JsonUtils.getListPersonJson(personList);
+		System.out.println(personJson);
+		
+	    //put generate people into db
+		CloudantClientImpl cc = new CloudantClientImpl();
+		cc.deleteAll();
+		
+		for(Person person: personList){
+			cc.putPerson(person);
+		}
+		
+//		File dest=new File(FileTool.insightsFolder+"out.json");
+//		try {
+//			FileTool.writeFileContent(dest, personJson);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 	}
 	
 	/**
@@ -48,23 +70,39 @@ public class PersonListGenerator {
 		String gender=null;
 		List<Trait> traitList;
 		
-		String IMAGEPATH=Constants.IMAGEPATH;
-		String NAMEPATH=Constants.NAMEPATH;
-		String INSIGHTSINPUTFOLDER=Constants.INSIGHTSINPUTFOLDER;
+		String imageFileFullPath=FileTool.imageFileFullPath;
+		String nameFileFullPath=FileTool.nameFileFullPath;
+		
+		String maleInsightsFolder=FileTool.maleInsightsFolder;
+		String femalInsightsFolder=FileTool.femalInsightsFolder;
 		
 		try {
 			//image data source
 //			URL url = new URL("https://dl.dropboxusercontent.com/u/27101002/personafusion/imageLinks.txt");
-			BufferedReader reader = new BufferedReader( new FileReader(IMAGEPATH));
+			BufferedReader reader = new BufferedReader( new FileReader(imageFileFullPath));
 			Scanner scan0 = new Scanner(reader);
 			
 			// Set<String> nameList = NameGenerator.generateDistinctFullNames(numPeople);
 			Set<String> nameList = getNameList();
-			for(String name : nameList) {								
+			for(String name : nameList) {	
+				
+                String insightsFileFullPath=null;
+				//first 50 is male, the other 50 is femal in image data source
+				if(pCounter<=50){
+					gender=Constants.MALE;
+					insightsFileFullPath=maleInsightsFolder+pCounter+".txt";
+				}else{
+					gender=Constants.FEMAL;
+					insightsFileFullPath=femalInsightsFolder+(--pCounter)+".txt";
+				}
+				
 				//get traits from watson
-				String socialData=FileTool.getFileContent(new File(INSIGHTSINPUTFOLDER+pCounter+".txt"));
+				String socialData=FileTool.getFileContent(new File(insightsFileFullPath));
 				WatsonPersonalInsights watsonPersonalInsights = new WatsonPersonalInsights();
 				List<Trait> traits = watsonPersonalInsights.getTraitsList(socialData);		
+				
+				//test
+//				List<Trait> traits =new ArrayList<Trait>();
 				
 				if(scan0.hasNextLine()) {
 					imgURL = scan0.nextLine();
@@ -74,12 +112,7 @@ public class PersonListGenerator {
 				String id=name; //here just use name as id 
 				int age=getAge(20, 30);
 				
-				//first 50 is male, the other 50 is femal in image data source
-				if(pCounter<=50){
-					gender=Constants.MALE;
-				}else{
-					gender=Constants.FEMAL;
-				}
+
 				
 				Person newPerson=new Person(id, name, age, gender, image_url, socialData, traits);
 				

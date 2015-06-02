@@ -31,7 +31,13 @@ public class PersonControllerImpl implements IPersonController {
 
 	@Override
 	public String getPersonList(String query) {
-		List<Person> person=cloudantClient.getPersonList(query);
+		//parse json query parameters
+		Gson gson = new Gson();
+		QueryPara queryPara=gson.fromJson(query, QueryPara.class);	
+		
+		String gender=queryPara.getGender();
+		
+		List<Person> person=cloudantClient.getPersonList(gender);
 		if(person.size()>0){
 			return JsonUtils.getListPersonJson(person);
 		}else {

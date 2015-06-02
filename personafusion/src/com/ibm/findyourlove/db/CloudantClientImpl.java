@@ -1,6 +1,5 @@
 package com.ibm.findyourlove.db;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,12 +12,8 @@ import org.ektorp.http.StdHttpClient;
 import org.ektorp.impl.StdCouchDbConnector;
 import org.ektorp.impl.StdCouchDbInstance;
 
-import sun.nio.cs.ext.TIS_620;
 
 import com.ibm.findyourlove.model.Person;
-import com.ibm.findyourlove.model.QueryPara;
-import com.ibm.findyourlove.model.Trait;
-import com.ibm.findyourlove.service.WatsonPersonalInsights;
 import com.ibm.findyourlove.util.Config;
 import com.ibm.findyourlove.util.Constants;
 import com.ibm.findyourlove.util.JsonUtils;
@@ -66,13 +61,15 @@ public class CloudantClientImpl implements ICloudantClient
 //		this.port = (int)cloudantCredentials.get("port");
 		
 		
-		//this is for test
+		//TOOD this is for local test
 		this.name = Config.CLOUDANT_NAME;
 		this.username = "e5ed1971-86ef-4a5b-94c1-9e39d6f6eb98-bluemix";
 		this.password = "5b0f760e2e436c98cff0b4844ded286f0357b09a7ba8ab1cbf822b3c43f4a7db";
 		this.host = "e5ed1971-86ef-4a5b-94c1-9e39d6f6eb98-bluemix.cloudant.com";
 		this.port = 443;
+		//end test
 		//String url="https://e5ed1971-86ef-4a5b-94c1-9e39d6f6eb98-bluemix:5b0f760e2e436c98cff0b4844ded286f0357b09a7ba8ab1cbf822b3c43f4a7db@e5ed1971-86ef-4a5b-94c1-9e39d6f6eb98-bluemix.cloudant.com"
+
 		
 		//-------------------------------------
 		this.httpClient = null;
@@ -101,6 +98,7 @@ public class CloudantClientImpl implements ICloudantClient
 		{
 			@SuppressWarnings("unchecked")
 			HashMap<String, Object> obj = this.dbc.get(HashMap.class, docId);
+			String gString=(String)obj.get(Constants.Gender);
 			if (obj.get(Constants.Gender) != null &&
 				obj.get(Constants.Gender).equals(gender))
 			{

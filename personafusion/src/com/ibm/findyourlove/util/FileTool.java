@@ -17,7 +17,15 @@ import java.util.List;
  */
 
 public class FileTool {
-
+	
+	//data source
+	static String FS=File.separator;
+	public static String imageFileFullPath=Config.getClassesPath()+"personData"+FS+"images"+FS+"imageLinks.txt";
+	public static String nameFileFullPath=Config.getClassesPath()+"personData"+FS+"name"+FS+"output.txt";
+	public static String insightsFolder=Config.getClassesPath()+"personData"+FS+"personalInsightsInput"+FS;
+	public static String maleInsightsFolder=Config.getClassesPath()+"personData"+FS+"personalInsightsInput"+FS+"M"+FS;
+	public static String femalInsightsFolder=Config.getClassesPath()+"personData"+FS+"personalInsightsInput"+FS+"F"+FS;
+	
 	//---------------------------------------------------------Public Methods
 	
 

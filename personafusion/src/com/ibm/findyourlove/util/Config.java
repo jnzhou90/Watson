@@ -11,7 +11,7 @@ public class Config
     
     /** Watson Personal Insights **/
 	public static final String PersonalInsightsServiceName="personality_insights";
-    public static final String PersonalInsightsProfileAPI = "/api/v2/profile";
+    public static final String PersonalInsightsProfileAPI =  "/v2/profile";
     public static final String WATSON_VIZ_API = "/api/v2/visualize";
 	
     /** Cloudant **/

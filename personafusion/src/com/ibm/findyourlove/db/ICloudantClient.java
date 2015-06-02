@@ -25,7 +25,7 @@ public interface ICloudantClient {
 	/**
 	 * get person set information with its query 
 	 * if can not find this person, return null
-	 * @param gender male or femal
+	 * @param gender value: male or femal
 	 * @return
 	 */
 	List<Person> getPersonList(String gender);
