@@ -1,41 +1,56 @@
-# Persona Fusion aka Talent Hotspot
+# Find Your Love With Watson
+
+To Use
+================================================================================
+
+```
+cf create-service cloudantNoSQLDB Shared talent-manager-db
+cf create-service personality_insights "IBM Watson Personality Insights Monthly Plan" personality-insights-talent-manager
+cf push myappname
+```
+
+Replace myapp name with the name of your app (ex. findyourlove)
+
+or click the button below
+
+[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
 
 # About
-## Meet Ivy
-* She's a talent manager at a growing tech startup. 
-* She's having trouble finding the right candidate based on:
-..* technical skills
-..* personal compatibility
+## Why Create This APP
+Tradtional love app can not answer the question:
+"what will happen if there is a love app which can help you find a person who have the same personality characteristics,need,and values with you besindes his outlooking?"
+* Personality characteristics describing how a person engages with the world.
+* Needs describe which aspects of a product will resonate with a person.
+* Values describe motivating factors that influence a person's decision making.
 
-> I wish I could clone my developer, Emory Wren -- having two guys like Emory working here would be amazing. 
+> If you are a single boy, you want to find a person who is beatuful, have sex body and so on. But besides these outlooking, you really want find a girl who have similer personality characteristics, needs and values with you. 
+> The same to girls who want to find her future real love, because 物以类聚，人以群分.
 
-But that's not possible. So what's the next best thing? 
+## Idea / Solution
+* Social Data: Visualizes emotional properties in tweets
+* Machine learning trains language models :uses linguistic analytics to infer individuals' intrinsic personality characteristics from digital communications that they make available.
+**“he is a greeableness person”
+**"she is taking pleasure in life"
+Displays Rank Result Persons Matching Your Personal Insights
+Our Phase 1 prototype is WORKING!
 
-
-** Talent Hotspot
-A web application that allows you to search for candidates from a pool of applicants based on how closely they resemble one of your current employees. 
-Talent Hotspot uses Watson's User Modeling API service to analyze a potential candidate's personality based on their answers to a questionnaie (completed upon application to Ivy's company.)
-
-The application can issue queries such as, 
-> "Find me a Developer like Craig Smith". 
-Then search through all possible candidate and return a ranked list of candidates sorted by highest-to-lowest percentage of personality resemblance. 
-From here, searches can be refined by including technical skills. 
-> "Find me a Developer like Craig Smith, and knows Java, C and Python"
+# Architecture 
+TODO
 
 # Technologies
 ## Watson APIs
-User Modeling API
+ Personality Insights API
 * Rerieve personality traits
-..* POST `systemu/api/v2/profile` 
-* Visualize personality Traits
-..* `systemu/api/v2/visualize`
+..* POST `/v2/profile`
+
+## Cloudant
+NoSQL DB Store Socail Data
 
 ## Bluemix
 * [Liberty for Java Profile](https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=javawebstarter)
 
 ## Other
 * Angular.js
-* external file manager for reading text files
 
 ## Pre-req's
 * [Install the Eclipse EE](https://ibm.biz/hackathon-eclipse).
