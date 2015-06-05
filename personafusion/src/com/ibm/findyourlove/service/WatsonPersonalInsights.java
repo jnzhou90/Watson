@@ -53,20 +53,20 @@ public class WatsonPersonalInsights
 	{		
 		//read env VCAP_SERVICES and parse it into JSON
 		logger.info("Processing VCAP_SERVICES for Personal Insights");
-//		JSONObject vcap = Config.getVCAPServices();
-//
-//		watson=(JSONArray)vcap.get(Config.PersonalInsightsServiceName);
-//		watsonInstance=(JSONObject)watson.get(0);
-//		watsonCredentials=(JSONObject)watsonInstance.get("credentials");
+		JSONObject vcap = Config.getVCAPServices();
 
-//		this.username = (String)watsonCredentials.get("username");
-//		this.password = (String)watsonCredentials.get("password");
-//		this.base_url = (String)watsonCredentials.get("url");
+		watson=(JSONArray)vcap.get(Config.PersonalInsightsServiceName);
+		watsonInstance=(JSONObject)watson.get(0);
+		watsonCredentials=(JSONObject)watsonInstance.get("credentials");
+
+		this.username = (String)watsonCredentials.get("username");
+		this.password = (String)watsonCredentials.get("password");
+		this.base_url = (String)watsonCredentials.get("url");
 		
 		//TOOD this is for local test
-		this.username = "57cff137-3261-4e08-8da8-80061bea78d8";
-		this.password = "xAyr1mkmASj4";
-		this.base_url = "https://gateway.watsonplatform.net/personality-insights/api";
+//		this.username = "57cff137-3261-4e08-8da8-80061bea78d8";
+//		this.password = "xAyr1mkmASj4";
+//		this.base_url = "https://gateway.watsonplatform.net/personality-insights/api";
 		//end test
 		
 		this.profile_api = Config.PersonalInsightsProfileAPI;
