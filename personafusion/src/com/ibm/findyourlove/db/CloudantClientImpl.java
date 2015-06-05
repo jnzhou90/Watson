@@ -46,7 +46,6 @@ public class CloudantClientImpl implements ICloudantClient
 	// --------------------------------------------------------------------------------------
 	public CloudantClientImpl()
 	{
-		
 		//read env VCAP_SERVICES and parse it into JSON
 		logger.info("Processing VCAP_SERVICES for Personal Insights");
 //		JSONObject vcap = Config.getVCAPServices();
