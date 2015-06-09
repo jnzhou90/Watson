@@ -67,7 +67,7 @@ public class WatsonPersonalInsights
 //		this.username = "57cff137-3261-4e08-8da8-80061bea78d8";
 //		this.password = "xAyr1mkmASj4";
 //		this.base_url = "https://gateway.watsonplatform.net/personality-insights/api";
-		//end test
+		//end test 
 		
 		this.profile_api = Config.PersonalInsightsProfileAPI;
 		this.executor = Executor.newInstance().auth(username, password);
